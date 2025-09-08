@@ -1,6 +1,6 @@
 {
-  "name": "my-utils",
-  "version": "0.1.0",
+  "name": "@xyzsaas/utils",
+  "version": "0.0.2",
   "description": "My JavaScript utils library",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -8,8 +8,19 @@
   "scripts": {
     "build": "rollup -c",
     "test": "vitest run",
-    "lint": "eslint src --ext .js,.ts"
+    "lint": "eslint src --ext .js,.ts",
+    "npmjs": "npm publish --access public --registry=https://registry.npmjs.org"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szuprefix/xyz-utils.git"
+  },
+  "keywords": [
+    "utils",
+    "xyz"
+  ],
+  "author": "szuprefix@126.com",
+  "license": "ISC",
   "files": [
     "dist"
   ],
