@@ -2,7 +2,7 @@
  * Created by denishuang on 2019/8/25.
  */
 
-export function normalizeItems(items, templates, normalize) {
+export function arrayNormalize(items, templates, normalize) {
     // console.log(templates)
     // if(!(templates instanceof Array)) {
     //     templates = [templates]
