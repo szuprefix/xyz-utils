@@ -1,4 +1,6 @@
 export * from "./array/arrayNormalize"
+export * from "./array/fieldsNormalize"
 export * from "./string/hierarchy"
 export * from "./web/download"
 export * from "./api/submit"
+export * from "./vite/import"

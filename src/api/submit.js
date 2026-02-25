@@ -1,6 +1,5 @@
 
 import { ref, getCurrentInstance } from 'vue'
-import Qs from 'qs'
 import { format } from 'date-fns'
 
 function joinErrors(errors) {
@@ -74,13 +73,29 @@ export function useSubmit(restStyle = false) {
         return error
     }
 
+    const objToQueryString = obj => {
+        const params = new URLSearchParams();
+        for (const key in obj) {
+            if (Object.hasOwnProperty.call(obj, key)) {
+                const value = obj[key];
+                // 处理数组或简单值，URLSearchParams 会自动处理编码
+                if (Array.isArray(value)) {
+                    value.forEach(v => params.append(key, v));
+                } else if (value !== undefined && value !== null) {
+                    params.append(key, String(value));
+                }
+            }
+        }
+        return params.toString();
+    };
+
     async function submitData(url, data, successMsg, isCreate = false) {
         loading.value = true
         // 如果需要处理表单错误，可在此初始化 errors
         // const errors = ref({})
 
         const action = isCreate ? $http.post : $http.put
-        const dt = restStyle ? data : Qs.stringify(formatDates(data))
+        const dt = restStyle ? data : objToQueryString(formatDates(data))
 
         try {
             const response = await action(url, dt)

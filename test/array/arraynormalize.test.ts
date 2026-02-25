@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { normalizeItems } from "../../src/array/normalizeItems";
+import { arrayNormalize } from "../../src/array/arrayNormalize";
 
 // 假的模板数据
 const templates = {
@@ -7,9 +7,9 @@ const templates = {
     bar: { type: "number" },
 };
 
-describe("normalizeItems", () => {
+describe("arrayNormalize", () => {
     it("should expand 'all' into all template keys", () => {
-        const result = normalizeItems("all", templates);
+        const result = arrayNormalize("all", templates);
         expect(result).toEqual([
             { type: "string", required: true, name: "foo" },
             { type: "number", name: "bar" },
@@ -17,25 +17,25 @@ describe("normalizeItems", () => {
     });
 
     it("should handle string item", () => {
-        const result = normalizeItems(["foo"], templates);
+        const result = arrayNormalize(["foo"], templates);
         expect(result).toEqual([{ type: "string", required: true, name: "foo" }]);
     });
 
     it("should handle array item (pass-through)", () => {
         const arrItem = [1, 2, 3];
-        const result = normalizeItems([arrItem], templates);
+        const result = arrayNormalize([arrItem], templates);
         expect(result).toEqual([arrItem]);
     });
 
     it("should merge object item with template", () => {
         const items = [{ name: "bar", extra: true }];
-        const result = normalizeItems(items, templates);
+        const result = arrayNormalize(items, templates);
         expect(result).toEqual([{ type: "number", name: "bar", extra: true }]);
     });
 
     it("should call normalize function if provided", () => {
         const mockNormalize = vi.fn((d, i) => ({ ...d, index: i }));
-        const result = normalizeItems(["foo"], templates, mockNormalize);
+        const result = arrayNormalize(["foo"], templates, mockNormalize);
 
         expect(mockNormalize).toHaveBeenCalledTimes(1);
         expect(mockNormalize).toHaveBeenCalledWith(
@@ -48,7 +48,7 @@ describe("normalizeItems", () => {
     });
 
     it("should handle empty items", () => {
-        const result = normalizeItems([], templates);
+        const result = arrayNormalize([], templates);
         expect(result).toEqual([]);
     });
 });
