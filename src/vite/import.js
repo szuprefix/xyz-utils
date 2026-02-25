@@ -19,7 +19,7 @@ export const autoViews = () => {
     let vs = import.meta.glob("/src/views/**/**.vue")
     return map(vs, (v, k) => {
         let p = k.replace('/src/views/','/').replace('.vue', '')
-        p = snakeCase(p)
+        p= p.split('/').map(snakeCase).join('/')
         return {path: p, component: v}
     })
 }
